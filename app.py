@@ -188,7 +188,7 @@ elif page == "Department Comparison":
         if core:
             heat = dept_stats.set_index("Department")[core].fillna(0)
             fig2 = px.imshow(heat, labels=dict(x="Metric", y="Department", color="Value"), aspect="auto")
-            st.plotly_chart(fig2, use_container_width=True)
+            st.plotly_chart(fig2, use_column_width=True)
 
 # -------------------- PAGE: PER-DEPARTMENT --------------------
 elif page == "Per-Department":
@@ -243,9 +243,9 @@ elif page == "Per-Department":
         # fallback: show all faculty if no direct mapping
         if fac.empty and not faculty_all.empty:
             st.info("No exact faculty mapping found; showing all faculty.")
-            st.dataframe(faculty_all, use_container_width=True)
+            st.dataframe(faculty_all)
         elif not fac.empty:
-            st.dataframe(fac, use_column_width=True)
+            st.dataframe(fac)
             st.markdown(download_link_df(fac, f"faculty_{dept_choice}.csv", "Download this department's faculty"), unsafe_allow_html=True)
 
 # -------------------- PAGE: FACULTY EXPLORER --------------------
@@ -271,7 +271,7 @@ elif page == "Faculty Explorer":
         if pos_filter:
             df = df[df['Position'].isin(pos_filter)]
 
-        st.dataframe(df, use_container_width=True)
+        st.dataframe(df)
         st.markdown(download_link_df(df, "faculty_filtered.csv", "Download filtered faculty data"), unsafe_allow_html=True)
 
 # -------------------- PAGE: ADVANCED CHARTS --------------------
@@ -360,21 +360,21 @@ elif page == "Data & Downloads":
 
     if not dept_stats.empty:
         st.subheader("Department External Statistics")
-        st.dataframe(dept_stats, use_container_width=True)
+        st.dataframe(dept_stats)
         st.markdown(download_link_df(dept_stats, "department_external_statistics.csv", "Download department_external_statistics.csv"), unsafe_allow_html=True)
     else:
         st.info("department_external_statistics.csv not found.")
 
     if not uni_stats.empty:
         st.subheader("University Overview")
-        st.dataframe(uni_stats, use_container_width=True)
+        st.dataframe(uni_stats)
         st.markdown(download_link_df(uni_stats, "university_external_overview.csv", "Download university_external_overview.csv"), unsafe_allow_html=True)
     else:
         st.info("university_external_overview.csv not found.")
 
     if not faculty_all.empty:
         st.subheader("Combined Faculty Data")
-        st.dataframe(faculty_all, use_container_width=True)
+        st.dataframe(faculty_all)
         st.markdown(download_link_df(faculty_all, "faculty_all.csv", "Download faculty_all.csv"), unsafe_allow_html=True)
     else:
         st.info("No faculty CSVs found (expected ece/cse/mech/textile).")
@@ -382,4 +382,3 @@ elif page == "Data & Downloads":
 # -------------------- FOOTER --------------------
 st.sidebar.markdown("---")
 st.sidebar.caption("Place the CSV files and image.png in the same folder as app.py. Refresh the app after updating files.")
-
